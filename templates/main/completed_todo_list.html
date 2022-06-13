@@ -1,0 +1,40 @@
+{% extends 'main/base.html' %}
+
+
+{% block content %}
+
+    <form class="form-row" action="add_todo" method = "post">
+        <button type="submit" class="btn btn-primary">Add Task</button>
+        <input type="text" class="form-control" name="content" style="margin-top: 1%" id="inlineFormInputGroupUsername" placeholder="type here...">
+    </form>
+
+    <h2 style="margin-top: 1%"> Tasks in "List 1"</h2>
+
+    {% for todo_item in done %}
+        {% if todo_item.is_done == True %}
+            <ul class="list-group">
+             <li class="list-group-item" aria-current="true" >
+                       <div style="display: inline "> <h8>Task {{ todo_item.id }}</h8> </div>
+                        <div style="display: inline ; margin-left: 10%"> {{ todo_item.title }}</div>
+                        <div style="display: inline ; margin-left: 10%" > {{ todo_item.added_date }} </div>
+                        <div style="display: inline ; margin-left: 10%"> {{ todo_item.due_on }} </div>
+                        <div style="display: inline ; margin-left: 10%">  {{ todo_item.owner }} </div>
+                        <div  style="display: inline; float: right; margin-left: 10%">
+                           <form action="check/{{ todo_item.id }}" method="post"> <button style="background-color: {{ todo_item.color }}" type="button" class="btn btn-primary" >Done</button> </form>
+
+                        </div>
+
+                    </li>
+            </ul>
+
+        {% endif %}
+    {% endfor %}
+
+    <div style="margin-top: 1%">
+        <a class="button" href="{% url 'main:completed_todo' %}" > <button type="button" class="btn btn-primary btn-danger " style="background-color: orange" >View completed tasks</button> </a>
+{#    <form style="display: inline" action="completed_todo_list.html" method = "post"><button type="button" class="btn btn-primary btn-danger " style="background-color: orange"  >View completed tasks </button></form>#}
+        <form style="display: inline" action="delete_todoOne" method = "post"> <button type="submit" class="btn btn-primary btn-danger" >Delete this list</button></form>
+    </div>
+
+
+{% endblock content %}
